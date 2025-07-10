@@ -1,4 +1,3 @@
-alert();
 window.onload = function () {
     google.accounts.id.initialize({
       client_id: '73732306444-dfm8hcn3m7s8c1hgv5dv5pj6vsir819v.apps.googleusercontent.com',
