@@ -8,7 +8,7 @@ function navigateToLang(lang) {
     }
 
     window.location.href = `views/${lang}/decklist`; 
-}
+} 
 
 window.onload = function () {
     tokenClient = google.accounts.oauth2.initTokenClient({
