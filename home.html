@@ -4,6 +4,11 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         
+        <title>Deck Simulator</title>
+
+        <!-- Fav Icon -->
+        <link rel="icon" type="image/x-icon" href="img/icon/favicon.ico">
+
         <!-- Bootstrap -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.7/css/bootstrap.min.css" integrity="sha512-fw7f+TcMjTb7bpbLJZlP8g2Y4XcCyFZW8uy8HsRZsH/SwbMw0plKHFHr99DN3l04VsYNwvzicUX/6qurvIxbxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.13.1/font/bootstrap-icons.min.css" integrity="sha512-t7Few9xlddEmgd3oKZQahkNI4dS6l80+eGEzFQiqtyVYdvcSG2D3Iub77R20BdotfRPA9caaRkg1tyaJiPmO0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -17,17 +22,31 @@
 
         <!-- Main Css -->
         <link rel="style" href="css/home.css" />
-
-        <style>
-            iframe {
-                color-scheme: normal !important;
-            }
-        </style>
     </head>
     <body>
-        <h1 class="">
-            Hello World Hello
-        <h1>
+        <div class="container vw-100 vh-100 position-relative py-3">
+            <div class="card" style="max-width: 400px;">
+                <div class="card-body">
+                    <div class="row g-3 p-0 m-0">
+                        <div class="col-12">
+                            <a class="btn rounded-0" role="button">
+                                <h1>日本語</h1>
+                            </a>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn rounded-0" role="button">
+                                <h1>繁體中文</h1>
+                            </a>
+                        </div>
+                        <div class="col-12">
+                            <a class="btn rounded-0" role="button">
+                                <h1>English</h1>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Jquery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -50,5 +69,6 @@
 
         <!-- Main JS -->
         <script src="js/home.js"></script>
+
     </body>
 </html>
