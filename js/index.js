@@ -5,8 +5,8 @@ window.onload = function () {
     });
 
     document.getElementById('google-login-btn').addEventListener('click', function () {
-      Pace.restart();
       google.accounts.id.prompt();
+      Pace.restart();
     });
 }
 
