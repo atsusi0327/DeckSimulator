@@ -7,7 +7,7 @@ function navigateToLang(lang) {
         return;
     }
 
-    window.location.href = `views/${lang}/decklist.${lang}.html`;
+    window.location.href = `views/${lang}/decklist`;
 }
 
 window.onload = function () {
