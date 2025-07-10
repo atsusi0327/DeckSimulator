@@ -75,6 +75,11 @@
         <script src="https://accounts.google.com/gsi/client" async defer></script>
 
         <!-- Main JS -->
-        <script src="js/index.js"></script>
+        <script>
+            window.handleCredentialResponse = function (response) {
+                console.log("Google JWT Token:", response.credential);
+                window.location.href = "/DeckSimulator/home.html";
+            };
+        </script>
     </body>
 </html>
