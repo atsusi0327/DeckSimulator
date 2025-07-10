@@ -1,0 +1,39 @@
+/*--------------------------------------------------------------
+# Import
+--------------------------------------------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&family=Ma+Shan+Zheng&family=Noto+Color+Emoji&family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+SC:wght@100..900&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+JP:wght@200..900&family=Noto+Serif+SC:wght@200..900&family=Noto+Serif+TC:wght@200..900&family=Zen+Antique+Soft&display=swap');
+
+/*--------------------------------------------------------------
+# Font Class
+--------------------------------------------------------------*/
+body {
+	font-family: "Noto Sans TC", "Noto Sans SC", "Noto Sans JP", "Noto Color Emoji", "Noto Emoji", sans-serif !important;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.ft-sans {
+  font-family: "Noto Sans TC", "Noto Sans SC", "Noto Sans JP", "Noto Color Emoji", "Noto Emoji", sans-serif !important;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+.ft-serif {
+	font-family: "Noto Serif TC", "Noto Serif SC","Noto Serif JP", "Noto Color Emoji", "Noto Emoji",serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.ft-regular {
+  font-family: "LXGW WenKai TC", "Zen Antique Soft", "Ma Shan Zheng", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ft-emoji {
+  font-family: "Noto Color Emoji", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
