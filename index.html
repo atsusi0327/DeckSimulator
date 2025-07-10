@@ -82,10 +82,25 @@
         <!-- Main JS -->
         <script src="js/index.js"></script>
         <script>
+            let tokenClient;
+
+            window.onload = function () {
+                tokenClient = google.accounts.oauth2.initTokenClient({
+                    client_id: '73732306444-dfm8hcn3m7s8c1hgv5dv5pj6vsir819v.apps.googleusercontent.com',
+                    scope: 'https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive.file',
+                    callback: (tokenResponse) => {
+                        const accessToken = tokenResponse.access_token;
+                        localStorage.setItem("access_token", accessToken); // 儲存用
+                        window.location.href = "/DeckSimulator/home"; // 成功導向
+                    }
+                });
+            };
+
             window.handleCredentialResponse = function (response) {
-                console.log("Google JWT Token:", response.credential);
-                window.location.href = "/DeckSimulator/home";
+                // 現在不需要使用 ID token，只拿 access token 就好
+                tokenClient.requestAccessToken();
             };
         </script>
+
     </body>
 </html>
