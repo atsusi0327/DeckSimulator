@@ -144,6 +144,7 @@ async function createDeck(element) {
     } finally {
         element.disabled = false;
         element.innerText = "新建";
+        refreshDeckList();
     }
 }
 
@@ -182,5 +183,5 @@ $(function () {
     }
 
     console.log(`Access Token 確認成功\n${ACCESS_TOKEN}`);
-    listDeckSheets();
+    refreshDeckList();
 });
