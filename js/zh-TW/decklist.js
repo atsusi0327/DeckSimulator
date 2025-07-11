@@ -76,11 +76,19 @@ async function listDeckSheets() {
     const decks = [];
 
     for (const file of res.files) {
-        const match = file.name.match(/^_decksimulator_(.+)_([\d_]+)$/);
-        if (!match) continue;
+        const prefix = "_decksimulator_";
+        if (!file.name.startsWith(prefix)) continue;
 
-        const deckName = match[1];
-        const rawTime = match[2].replace(/_/g, '');
+        const raw = file.name.substring(prefix.length); // 移除前綴
+        const lastUnderscore = raw.lastIndexOf("_");
+        if (lastUnderscore === -1) continue;
+
+        const deckName = raw.substring(0, lastUnderscore);
+        const rawTime = raw.substring(lastUnderscore + 1);
+
+        // 檢查時間格式是否正確
+        if (!/^\d{14}$/.test(rawTime)) continue;
+
         const dateObj = new Date(file.createdTime);
 
         decks.push({
