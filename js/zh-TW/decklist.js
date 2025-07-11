@@ -166,7 +166,7 @@ async function refreshDeckList() {
                             </p>
                         </div>
                         <div class="card-createdt">
-                            <p class="small text-muted text-center m-0">
+                            <p class="small text-center m-0">
                                 ${deck.created}
                             </p>
                         </div>
