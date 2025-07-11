@@ -43,7 +43,7 @@
                     <li class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                         <div class="card">
                             <div class="card-body position-relative pt-card">
-                                <button class="btn btn-outline-light border-0 shadow-none outline-0 d-flex justify-content-center align-items-center position-absolute top-0 end-0 bottom-0 start-0 p-0 m-0" type="button">
+                                <button class="btn btn-outline-light border-0 shadow-none outline-0 d-flex justify-content-center align-items-center position-absolute top-0 end-0 bottom-0 start-0 p-0 m-0" type="button" data-bs-toggle="modal" data-bs-target="#createDeckModal">
                                     <i class="bi bi-plus-lg fs-1"></i>
                                 </button>
                             </div>
@@ -51,6 +51,29 @@
                     </li>
                 </ul>
             </div>
+
+            <!-- 新建牌組 -->
+             <div class="modal fade" id="createDeckModal" tabindex="-1" aria-labelledby="createDeckModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form class="" id="createDeckForm">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="createDeckModalLabel">新建牌組</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-floating">
+                                    <input class="form-control deck-name" type="text" placeholder="自訂牌組名稱">
+                                    <label>牌組名稱</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary w-100" type="button" onclick="createDeck(this)">新建</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+             </div>
         </main>
 
         <!-- Jquery -->
