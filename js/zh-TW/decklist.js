@@ -99,5 +99,5 @@ $(function () {
         return;
     }
 
-    console.log(`Access Token 確認成功${ACCESS_TOKEN}`);
+    console.log(`Access Token 確認成功\n${ACCESS_TOKEN}`);
 });
