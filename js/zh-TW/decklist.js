@@ -156,7 +156,7 @@ async function refreshDeckList() {
 
     for (const deck of decks) {
         const appendstr = `
-        <li class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+        <li class="col-6 col-md-4 col-lg-3 col-xl-2 mb-3">
             <div class="card">
                 <div class="card-body position-relative pt-card">
                     <button class="btn btn-outline-light border-0 shadow-none outline-0 d-flex flex-column position-absolute top-0 end-0 bottom-0 start-0 p-0 m-0" type="button">
