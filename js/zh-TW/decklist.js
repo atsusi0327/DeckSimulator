@@ -42,7 +42,7 @@ async function gapiRequest(method, url, body = null, params = null) {
 
     return await response.json();
 }
-
+ 
 async function findOrCreateDecksimulatorFolder() {
     const query = `name='${FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false`;
     const res = await gapiRequest("GET", "https://www.googleapis.com/drive/v3/files", null, {
