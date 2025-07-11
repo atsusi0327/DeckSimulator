@@ -94,5 +94,10 @@ async function createDeck(element) {
 
 // Web Start =======================================================
 $(function () {
-    console.log(ACCESS_TOKEN);
+    if (!ACCESS_TOKEN) {
+        window.location.href = "../../";
+        return;
+    }
+
+    console.log(`Access Token 確認成功${ACCESS_TOKEN}`);
 });
