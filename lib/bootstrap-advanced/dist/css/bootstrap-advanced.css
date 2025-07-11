@@ -12756,6 +12756,10 @@ a {
     padding-top: 355.56% !important;
 }
 
+.pt-card {
+    padding-top: 71.825% !important;
+}
+
 .pt-header {
     padding-top: var(--bs-header-height);
 }

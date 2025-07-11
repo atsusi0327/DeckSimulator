@@ -23,12 +23,33 @@
         <link rel="style" href="../../css/zh-TW/decklist.css" />
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="../zh-TW/decklist">Deck Simulator</a>
+        <header>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="../zh-TW/decklist">Deck Simulator</a>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">牌組列表</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="container">
+                <ul class="list-unstyled row g-3 p-0 m-0">
+                    <li class="card border-2 position-relative pt-card">
+                        <div class="card-body position-absolute top-0 start-0 bottom-0 end-0">
+                            <button class="btn w-100 h-100 border-0 position-relative" type="button">
+                                <i class="bi bi-plus-lg fs-1 position-absolute top-50 start-50 translate-middle"></i>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </nav>
-
+        </main>
 
         <!-- Jquery -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
