@@ -64,6 +64,36 @@ async function createDeckSheet(deckName, folderId) {
     return file.id;
 }
 
+async function listDeckSheets() {
+    const folderId = await findOrCreateDecksimulatorFolder();
+
+    const query = `'${folderId}' in parents and mimeType='application/vnd.google-apps.spreadsheet' and trashed=false`;
+    const res = await gapiRequest("GET", "https://www.googleapis.com/drive/v3/files", null, {
+        q: query,
+        fields: "files(id, name, createdTime)"
+    });
+
+    const decks = [];
+
+    for (const file of res.files) {
+        const match = file.name.match(/^_decksimulator_(.+)_([\d_]+)$/);
+        if (!match) continue;
+
+        const deckName = match[1];
+        const rawTime = match[2].replace(/_/g, '');
+        const dateObj = new Date(file.createdTime);
+
+        decks.push({
+            id: file.id,
+            name: deckName,
+            created: dateObj.toLocaleString(),
+        });
+    }
+
+    console.log("找到的牌組列表：", decks);
+    return decks;
+}
+
 // Main ============================================================
 async function createDeck(element) {
     const form = document.querySelector("#createDeckForm");
@@ -100,4 +130,6 @@ $(function () {
     }
 
     console.log(`Access Token 確認成功\n${ACCESS_TOKEN}`);
+
+    listDeckSheets();
 });
