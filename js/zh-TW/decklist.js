@@ -79,15 +79,12 @@ async function listDeckSheets() {
         const prefix = "_decksimulator_";
         if (!file.name.startsWith(prefix)) continue;
 
-        const raw = file.name.substring(prefix.length); // 移除前綴
-        const lastUnderscore = raw.lastIndexOf("_");
-        if (lastUnderscore === -1) continue;
+        const raw = file.name.substring(prefix.length);
+        const match = raw.match(/^(.*)_(\d{8}_\d{6})$/);
+        if (!match) continue;
 
-        const deckName = raw.substring(0, lastUnderscore);
-        const rawTime = raw.substring(lastUnderscore + 1);
-
-        // 檢查時間格式是否正確
-        if (!/^\d{14}$/.test(rawTime)) continue;
+        const deckName = match[1];
+        const rawTime = match[2];
 
         const dateObj = new Date(file.createdTime);
 
@@ -101,6 +98,7 @@ async function listDeckSheets() {
     console.log("找到的牌組列表：", decks);
     return decks;
 }
+
 
 // Main ============================================================
 async function createDeck(element) {
