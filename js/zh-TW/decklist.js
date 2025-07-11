@@ -94,5 +94,5 @@ async function createDeck(element) {
 
 // Web Start =======================================================
 $(function () {
-    // 可選初始化邏輯
+    console.log(ACCESS_TOKEN);
 });
