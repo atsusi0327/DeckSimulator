@@ -4,8 +4,14 @@ const FOLDER_NAME = "_decksimulator";
 
 // Helpers =========================================================
 async function gapiRequest(method, url, body = null, params = null) {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+        window.location.href = "../../";
+        return;
+    }
+
     const headers = {
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
     };
 
@@ -22,7 +28,14 @@ async function gapiRequest(method, url, body = null, params = null) {
     });
 
     if (!response.ok) {
-        const error = await response.json();
+        if (response.status === 401) {
+            console.warn("Access token 已失效，導回首頁");
+            localStorage.removeItem("access_token");
+            window.location.href = "../../";
+            return;
+        }
+
+        const error = await response.json().catch(() => ({}));
         console.error("Google API error", error);
         throw new Error(error.error?.message || "Unknown error");
     }
@@ -37,7 +50,7 @@ async function findOrCreateDecksimulatorFolder() {
         fields: "files(id, name)"
     });
 
-    if (res.files.length > 0) {
+    if (res?.files?.length > 0) {
         return res.files[0].id;
     }
 
@@ -51,10 +64,12 @@ async function findOrCreateDecksimulatorFolder() {
 
 async function createDeckSheet(deckName, folderId) {
     const now = new Date();
-    const formatted = now.toLocaleString("sv-SE", { hour12: false }).replace(/[-:T]/g, "").replace(" ", "_");
+    const formatted = now.toLocaleString("sv-SE", { hour12: false })
+        .replace(/[-:T]/g, "")
+        .replace(" ", "_");
+
     const sheetTitle = `_decksimulator_${deckName}_${formatted}`;
 
-    // Create sheet
     const file = await gapiRequest("POST", "https://www.googleapis.com/drive/v3/files", {
         name: sheetTitle,
         mimeType: "application/vnd.google-apps.spreadsheet",
@@ -75,7 +90,7 @@ async function listDeckSheets() {
 
     const decks = [];
 
-    for (const file of res.files) {
+    for (const file of res.files ?? []) {
         const prefix = "_decksimulator_";
         if (!file.name.startsWith(prefix)) continue;
 
@@ -99,14 +114,19 @@ async function listDeckSheets() {
     return decks;
 }
 
-
 // Main ============================================================
 async function createDeck(element) {
     const form = document.querySelector("#createDeckForm");
     const input = form.querySelector(".deck-name");
     const deckName = input.value.trim();
+
     if (!deckName) {
         alert("請輸入牌組名稱");
+        return;
+    }
+
+    if (deckName.length > 20) {
+        alert("牌組名稱不得超過 20 個字");
         return;
     }
 
@@ -117,7 +137,7 @@ async function createDeck(element) {
         const folderId = await findOrCreateDecksimulatorFolder();
         const sheetId = await createDeckSheet(deckName, folderId);
         alert(`已建立牌組 ${deckName}，ID: ${sheetId}`);
-        // TODO: 你可以在這邊進一步導向或渲染列表
+        await listDeckSheets(); // 可加載或刷新列表
     } catch (err) {
         console.error(err);
         alert("建立失敗：" + err.message);
@@ -127,7 +147,6 @@ async function createDeck(element) {
     }
 }
 
-
 // Web Start =======================================================
 $(function () {
     if (!ACCESS_TOKEN) {
@@ -136,6 +155,5 @@ $(function () {
     }
 
     console.log(`Access Token 確認成功\n${ACCESS_TOKEN}`);
-
     listDeckSheets();
 });
