@@ -65,8 +65,9 @@ async function createDeckSheet(deckName, folderId) {
 }
 
 // Main ============================================================
-async function createDeck(element){
-    const input = document.querySelector(".deck-name");
+async function createDeck(element) {
+    const form = document.querySelector("#createDeckForm");
+    const input = form.querySelector(".deck-name");
     const deckName = input.value.trim();
     if (!deckName) {
         alert("請輸入牌組名稱");
@@ -89,6 +90,7 @@ async function createDeck(element){
         element.innerText = "新建";
     }
 }
+
 
 // Web Start =======================================================
 $(function () {
