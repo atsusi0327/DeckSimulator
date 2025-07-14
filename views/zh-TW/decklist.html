@@ -115,20 +115,33 @@
                         <div class="modal-body">
                             <form id="cardForm">
                                 <div class="row align-items-center mb-3">
-                                    <label class="col-auto" for="cardName">卡片名稱</label>
+                                    <label class="col-auto" for="cardName">名稱</label>
                                     <div class="col">
                                         <input class="form-control" type="text" id="cardName" />
                                     </div>
                                 </div>
                                 <div class="row align-items-center mb-3">
-                                    <label class="col-auto" for="cardNumber">卡片號碼</label>
+                                    <label class="col-auto" for="cardNumber">號碼</label>
                                     <div class="col">
                                         <input class="form-control" type="text" id="cardNumber" />
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="row g-3">
-
+                                    <!-- 卡片顏色 -->
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" id="cardColor">
+                                            <label for="cardColor">顏色</label>
+                                        </div>
+                                    </div>
+                                    <!-- 卡片等級 -->
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" id="cardLevel">
+                                            <label for="cardLevel">等級</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>
