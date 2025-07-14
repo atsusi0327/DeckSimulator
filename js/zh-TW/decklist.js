@@ -70,22 +70,32 @@ async function createDeckSheet(deckName, folderId) {
 
     const sheetTitle = `_decksimulator_${deckName}_${formatted}`;
 
-    // Step 1: 建立 Spreadsheet
-    const file = await gapiRequest("POST", "https://www.googleapis.com/drive/v3/files", {
-        name: sheetTitle,
-        mimeType: "application/vnd.google-apps.spreadsheet",
-        parents: [folderId]
+    // Step 1: 用 Sheets API 建立試算表（能回傳工作表名稱）
+    const spreadsheet = await gapiRequest("POST", "https://sheets.googleapis.com/v4/spreadsheets", {
+        properties: {
+            title: sheetTitle
+        }
     });
 
-    const spreadsheetId = file.id;
+    const spreadsheetId = spreadsheet.spreadsheetId;
+    const sheetName = spreadsheet.sheets[0].properties.title; // 通常是 "Sheet1"
 
-    // Step 2: 寫入表頭欄位
+    // Step 2: 移動檔案到指定資料夾
+    await gapiRequest("PATCH", `https://www.googleapis.com/drive/v3/files/${spreadsheetId}`, {
+        parents: [folderId]
+    }, {
+        addParents: folderId,
+        removeParents: "",
+        fields: "id, parents"
+    });
+
+    // Step 3: 寫入表頭
     const headerValues = [
         ["name", "number", "type", "color", "level", "cost", "trigger", "soul", "power", "effects", "feature", "amount"]
     ];
 
-    await gapiRequest("PUT", `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A1:L1`, {
-        range: "Sheet1!A1:L1",
+    await gapiRequest("PUT", `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}!A1:L1`, {
+        range: `${sheetName}!A1:L1`,
         majorDimension: "ROWS",
         values: headerValues
     }, {
@@ -94,6 +104,7 @@ async function createDeckSheet(deckName, folderId) {
 
     return spreadsheetId;
 }
+
 
 async function listDeckSheets() {
     const folderId = await findOrCreateDecksimulatorFolder();
