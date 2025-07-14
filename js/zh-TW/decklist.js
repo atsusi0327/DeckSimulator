@@ -189,7 +189,14 @@ async function editDeck(deckid) {
 
         const rows = sheetData.values;
         if (!rows || rows.length < 2) {
-            alert("找不到卡片資料");
+                // 取得 modal 元素
+                const modalElement = document.getElementById('editDeckModalLabel');
+
+                // 建立 Bootstrap Modal 實例
+                const modal = new bootstrap.Modal(modalElement);
+
+                // 開啟 Modal
+                modal.show();
             return;
         }
 
