@@ -189,7 +189,7 @@ async function editDeck(deckid) {
 
         const rows = sheetData.values;
         if (!rows || rows.length < 2) {
-                pace.restart();
+                Pace.restart();
                 // 取得 modal 元素
                 const modalElement = document.getElementById('editDeckModal');
 
