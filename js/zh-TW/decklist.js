@@ -70,7 +70,7 @@ async function createDeckSheet(deckName, folderId) {
 
     const sheetTitle = `_decksimulator_${deckName}_${formatted}`;
 
-    // 建立 Google Sheet 檔案
+    // Step 1: 建立 Google Sheet
     const file = await gapiRequest("POST", "https://www.googleapis.com/drive/v3/files", {
         name: sheetTitle,
         mimeType: "application/vnd.google-apps.spreadsheet",
@@ -79,14 +79,18 @@ async function createDeckSheet(deckName, folderId) {
 
     const sheetId = file.id;
 
-    // 寫入表頭
+    // Step 2: 用 Sheets API 拿到第一個工作表實際名稱
+    const meta = await gapiRequest("GET", `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}`);
+    const sheetName = meta.sheets[0].properties.title;
+
+    // Step 3: 寫入你要的表頭（12 欄）
     const headers = [
         "name", "number", "type", "color", "level", "cost",
         "trigger", "soul", "power", "effects", "feature", "amount"
     ];
 
-    await gapiRequest("PUT", `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:L1`, {
-        range: "Sheet1!A1:L1",
+    await gapiRequest("PUT", `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(sheetName)}!A1:L1`, {
+        range: `${sheetName}!A1:L1`,
         majorDimension: "ROWS",
         values: [headers]
     }, {
@@ -95,6 +99,7 @@ async function createDeckSheet(deckName, folderId) {
 
     return sheetId;
 }
+
 
 async function listDeckSheets() {
     const folderId = await findOrCreateDecksimulatorFolder();
