@@ -109,10 +109,19 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header border-0">
-                            <h5 class="modal-title" id="editDeckModalLabel">編輯卡片</h5>
+                            <h5 class="modal-title" id="editDeckModalLabel">卡片</h5>
                             <button class="btn-close" type="button" data-bs-toggle="modal" data-bs-target="#editDeckModal"></button>
                         </div>
-                        <div class="modal-body"></div>
+                        <div class="modal-body">
+                            <form id="cardForm">
+                                <div class="row g-3 p-0 m-0">
+                                    <label class="col-sm-2 col-form-label">卡片名稱</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control-plaintext" type="text" id="cardName" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                         <div class="modal-footer"></div>
                     </div>
                 </div>
