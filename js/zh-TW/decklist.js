@@ -177,6 +177,41 @@ async function refreshDeckList() {
     }
 }
 
+async function editDeck(deckid) {
+    try {
+        // Step 1: 讀取 Spreadsheet 的第一個工作表資料
+        const sheetMeta = await gapiRequest("GET", `https://sheets.googleapis.com/v4/spreadsheets/${deckid}`);
+        const sheetName = sheetMeta.sheets[0].properties.title;
+
+        // Step 2: 讀取工作表資料 (假設從 A1 到 L，包含你指定的 12 欄)
+        const range = `${sheetName}!A1:L`;
+        const sheetData = await gapiRequest("GET", `https://sheets.googleapis.com/v4/spreadsheets/${deckid}/values/${encodeURIComponent(range)}`);
+
+        const rows = sheetData.values;
+        if (!rows || rows.length < 2) {
+            alert("找不到卡片資料");
+            return;
+        }
+
+        // Step 3: 將資料轉成物件陣列
+        const headers = rows[0];
+        const cards = rows.slice(1).map(row => {
+            const card = {};
+            headers.forEach((header, i) => {
+                card[header.trim()] = row[i] ?? "";
+            });
+            return card;
+        });
+
+        console.log("讀取到的卡片清單：", cards);
+
+        // TODO: 這裡你可以進一步將 cards 渲染到畫面上
+    } catch (err) {
+        console.error("讀取牌組資料失敗", err);
+        alert("讀取牌組資料失敗：" + err.message);
+    }
+}
+
 
 // Web Start =======================================================
 $(function () {
