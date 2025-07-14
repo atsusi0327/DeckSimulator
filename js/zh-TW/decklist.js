@@ -70,7 +70,7 @@ async function createDeckSheet(deckName, folderId) {
 
     const sheetTitle = `_decksimulator_${deckName}_${formatted}`;
 
-    // 建立 Google Sheet
+    // 建立 Google Sheet 檔案
     const file = await gapiRequest("POST", "https://www.googleapis.com/drive/v3/files", {
         name: sheetTitle,
         mimeType: "application/vnd.google-apps.spreadsheet",
@@ -79,35 +79,19 @@ async function createDeckSheet(deckName, folderId) {
 
     const sheetId = file.id;
 
-    // 表頭內容
+    // 寫入表頭
     const headers = [
-        "name",       // 卡片名稱
-        "number",     // 卡片代號
-        "type",       // 卡片類型
-        "color",      // 顏色
-        "level",      // 等級
-        "cost",       // 消耗
-        "trigger",    // 觸發
-        "soul",       // 魂點
-        "power",      // 力量
-        "effects",    // 效果
-        "feature",    // 特徵
-        "amount"      // 張數
+        "name", "number", "type", "color", "level", "cost",
+        "trigger", "soul", "power", "effects", "feature", "amount"
     ];
 
-    // 把 valueInputOption 放進 URL query string
-    const sheetApiUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:L1?valueInputOption=RAW`;
-
-    // 寫入表頭
-    await gapiRequest(
-        "PUT",
-        sheetApiUrl,
-        {
-            range: "Sheet1!A1:L1",
-            majorDimension: "ROWS",
-            values: [headers]
-        }
-    );
+    await gapiRequest("PUT", `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:L1`, {
+        range: "Sheet1!A1:L1",
+        majorDimension: "ROWS",
+        values: [headers]
+    }, {
+        valueInputOption: "RAW"
+    });
 
     return sheetId;
 }
