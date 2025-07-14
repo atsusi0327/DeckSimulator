@@ -70,39 +70,48 @@ async function createDeckSheet(deckName, folderId) {
 
     const sheetTitle = `_decksimulator_${deckName}_${formatted}`;
 
-    // Step 1: 用 Sheets API 建立試算表（能回傳工作表名稱）
-    const spreadsheet = await gapiRequest("POST", "https://sheets.googleapis.com/v4/spreadsheets", {
-        properties: {
-            title: sheetTitle
-        }
-    });
-
-    const spreadsheetId = spreadsheet.spreadsheetId;
-    const sheetName = spreadsheet.sheets[0].properties.title; // 通常是 "Sheet1"
-
-    // Step 2: 移動檔案到指定資料夾
-    await gapiRequest("PATCH", `https://www.googleapis.com/drive/v3/files/${spreadsheetId}`, {
+    // 建立 Google Sheet
+    const file = await gapiRequest("POST", "https://www.googleapis.com/drive/v3/files", {
+        name: sheetTitle,
+        mimeType: "application/vnd.google-apps.spreadsheet",
         parents: [folderId]
-    }, {
-        addParents: folderId,
-        removeParents: "",
-        fields: "id, parents"
     });
 
-    // Step 3: 寫入表頭
-    const headerValues = [
-        ["name", "number", "type", "color", "level", "cost", "trigger", "soul", "power", "effects", "feature", "amount"]
+    const sheetId = file.id;
+
+    // 表頭內容
+    const headers = [
+        "name",       // 卡片名稱
+        "number",     // 卡片代號
+        "type",       // 卡片類型
+        "color",      // 顏色
+        "level",      // 等級
+        "cost",       // 消耗
+        "trigger",    // 觸發
+        "soul",       // 魂點
+        "power",      // 力量
+        "effects",    // 效果
+        "feature",    // 特徵
+        "amount"      // 張數
     ];
 
-    await gapiRequest("PUT", `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${sheetName}!A1:L1`, {
-        range: `${sheetName}!A1:L1`,
-        majorDimension: "ROWS",
-        values: headerValues
-    }, {
-        valueInputOption: "RAW"
-    });
+    // 寫入表頭到試算表
+    await gapiRequest(
+        "POST",
+        `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:L1:append`,
+        {
+            range: "Sheet1!A1:L1",
+            majorDimension: "ROWS",
+            values: [headers]
+        },
+        {
+            params: {
+                valueInputOption: "RAW"
+            }
+        }
+    );
 
-    return spreadsheetId;
+    return sheetId;
 }
 
 
