@@ -158,11 +158,11 @@ async function createDeck(element) {
     try {
         const folderId = await findOrCreateDecksimulatorFolder();
         const sheetId = await createDeckSheet(deckName, folderId);
-        alert(`已建立牌組 ${deckName}，ID: ${sheetId}`);
+        alert(`已建立牌組：${deckName}`);
         await refreshDeckList(); // 可加載或刷新列表
     } catch (err) {
         console.error(err);
-        alert("建立失敗：" + err.message);
+        alert(`建立失敗：${err.message}`);
     } finally {
         element.disabled = false;
         element.innerText = "新建";
