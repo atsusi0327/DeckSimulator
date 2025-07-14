@@ -95,25 +95,22 @@ async function createDeckSheet(deckName, folderId) {
         "amount"      // 張數
     ];
 
-    // 寫入表頭到試算表
+    // 把 valueInputOption 放進 URL query string
+    const sheetApiUrl = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:L1?valueInputOption=RAW`;
+
+    // 寫入表頭
     await gapiRequest(
-        "POST",
-        `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1!A1:L1:append`,
+        "PUT",
+        sheetApiUrl,
         {
             range: "Sheet1!A1:L1",
             majorDimension: "ROWS",
             values: [headers]
-        },
-        {
-            params: {
-                valueInputOption: "RAW"
-            }
         }
     );
 
     return sheetId;
 }
-
 
 async function listDeckSheets() {
     const folderId = await findOrCreateDecksimulatorFolder();
