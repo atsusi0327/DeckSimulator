@@ -190,7 +190,7 @@ async function editDeck(deckid) {
         const rows = sheetData.values;
         if (!rows || rows.length < 2) {
                 // 取得 modal 元素
-                const modalElement = document.getElementById('editDeckModalLabel');
+                const modalElement = document.getElementById('editDeckModal');
 
                 // 建立 Bootstrap Modal 實例
                 const modal = new bootstrap.Modal(modalElement);
