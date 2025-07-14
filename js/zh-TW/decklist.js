@@ -70,13 +70,29 @@ async function createDeckSheet(deckName, folderId) {
 
     const sheetTitle = `_decksimulator_${deckName}_${formatted}`;
 
+    // Step 1: 建立 Spreadsheet
     const file = await gapiRequest("POST", "https://www.googleapis.com/drive/v3/files", {
         name: sheetTitle,
         mimeType: "application/vnd.google-apps.spreadsheet",
         parents: [folderId]
     });
 
-    return file.id;
+    const spreadsheetId = file.id;
+
+    // Step 2: 寫入表頭欄位
+    const headerValues = [
+        ["name", "number", "type", "color", "level", "cost", "trigger", "soul", "power", "effects", "feature", "amount"]
+    ];
+
+    await gapiRequest("PUT", `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Sheet1!A1:L1`, {
+        range: "Sheet1!A1:L1",
+        majorDimension: "ROWS",
+        values: headerValues
+    }, {
+        valueInputOption: "RAW"
+    });
+
+    return spreadsheetId;
 }
 
 async function listDeckSheets() {
